@@ -13,22 +13,23 @@ public class Result extends AppCompatActivity {
     EditText name;
     TextView result;
     Button btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
         db = new DbHelper(this);
-name=findViewById(R.id.Name);
-btn=findViewById(R.id.button);
+        name = findViewById(R.id.Name);
+        btn = findViewById(R.id.button);
+        result = findViewById(R.id.textView); // Initialize the result TextView
 
-btn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        int score=db.searchStudent(name.getText().toString());
-        result.setText("Hello "+name.getText().toString()+" your score is "+score);
-
-    }
-});
-
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int score = db.searchStudent(name.getText().toString());
+                result.setText("Hello " + name.getText().toString() + " your score is " + score);
+            }
+        });
     }
 }

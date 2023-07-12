@@ -1,7 +1,5 @@
 package com.example.navigationapp;
 
-
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,17 +10,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "students.db";
     private static final String TABLE_NAME = "students";
 
-
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_Answer = "answer";
-
+    private static final String COLUMN_ANSWER = "answer";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -33,7 +28,7 @@ public class DbHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_NAME + " TEXT,"
-                + COLUMN_Answer + " INTEGER"
+                + COLUMN_ANSWER + " INTEGER"
                 + ")";
         db.execSQL(sql);
     }
@@ -45,41 +40,31 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertStudent(String name,int correct) {
+    public void insertStudent(String name, int correct) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
-        values.put(COLUMN_Answer, correct);
-
-
-
+        values.put(COLUMN_ANSWER, correct);
 
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
 
-
-
-    public int searchStudent(String Name) {
-        int score=0;
-
-
+    public int searchStudent(String name) {
+        int score = 0;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE name=?";
-        String[] selectionArgs = {Name}; // Provide the value for the search criteria
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME + "=?";
+        String[] selectionArgs = {name};
 
         Cursor cursor = db.rawQuery(sql, selectionArgs);
 
-
-
         if (cursor != null && cursor.moveToFirst()) {
-
             @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-            @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
-            @SuppressLint("Range") String ans = cursor.getString(cursor.getColumnIndex(COLUMN_Answer));
-            score=Integer.parseInt(ans);
+            @SuppressLint("Range") String retrievedName = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+            @SuppressLint("Range") String ans = cursor.getString(cursor.getColumnIndex(COLUMN_ANSWER));
+            score = Integer.parseInt(ans);
         }
 
         cursor.close();
@@ -88,5 +73,3 @@ public class DbHelper extends SQLiteOpenHelper {
         return score;
     }
 }
-
-

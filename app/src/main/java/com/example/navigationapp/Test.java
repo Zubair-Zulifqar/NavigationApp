@@ -1,7 +1,5 @@
 package com.example.navigationapp;
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,9 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class Test extends AppCompatActivity {
@@ -24,12 +20,13 @@ public class Test extends AppCompatActivity {
     private char[] grassLetters = {'g', 'j', 'p', 'q', 'y'};
     private char[] rootLetters = {'a', 'c', 'e', 'i', 'm', 'n', 'o', 'r', 's', 'u', 'v', 'w', 'x', 'z'};
     private String answerString = "";
-    int correct=0;
+    int correct = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-          name=findViewById(R.id.name);
+        name = findViewById(R.id.name);
         db = new DbHelper(this);
         letterTextView = findViewById(R.id.letter_text_view);
         letterTextView.setText(getRandomLetter());
@@ -40,7 +37,7 @@ public class Test extends AppCompatActivity {
         skyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString == "Sky Letter") {
+                if (answerString.equals("Sky Letter")) {
                     answerTextView.setText("Awesome your answer is right");
                     correct++;
                 } else {
@@ -57,12 +54,12 @@ public class Test extends AppCompatActivity {
                 }, 5000); // 5000 milliseconds = 5 seconds
             }
         });
+
         Button submit = findViewById(R.id.submit);
-        skyButton.setOnClickListener(new View.OnClickListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                db.insertStudent(name.getText().toString(),correct);
+                db.insertStudent(name.getText().toString(), correct);
             }
         });
 
@@ -70,7 +67,7 @@ public class Test extends AppCompatActivity {
         grassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString == "Grass Letter") {
+                if (answerString.equals("Grass Letter")) {
                     answerTextView.setText("Awesome your answer is right");
                     correct++;
                 } else {
@@ -91,7 +88,7 @@ public class Test extends AppCompatActivity {
         rootButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString == "Root Letter") {
+                if (answerString.equals("Root Letter")) {
                     answerTextView.setText("Awesome your answer is right");
                     correct++;
                 } else {
